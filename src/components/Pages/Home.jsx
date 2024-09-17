@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { FaRegSun } from 'react-icons/fa';
-import { BsMoonStarsFill } from 'react-icons/bs';
-import Todo from '../Utilities/Todo';
-import Modal from '../Utilities/Modal';
-import EmptyPage from '../Utilities/EmptyPage';
-import '../Styles/Home.css';
-import { useModal } from '../Providers/ModalProvider';
-import { useTodos } from '../Providers/TodoProvider';
-import { useTheme } from '../Providers/ThemeProvider';
-import { storeInLocalStorage } from '../Utilities/localStorage';
+import React, { useState, useEffect } from "react";
+import { FaRegSun } from "react-icons/fa";
+import { BsMoonStarsFill } from "react-icons/bs";
+import Todo from "../Utilities/Todo";
+import Modal from "../Utilities/Modal";
+import EmptyPage from "../Utilities/EmptyPage";
+import "../Styles/Home.css";
+import { useModal } from "../Providers/ModalProvider";
+import { useTodos } from "../Providers/TodoProvider";
+import { useTheme } from "../Providers/ThemeProvider";
+import { storeInLocalStorage } from "../Utilities/localStorage";
 
 const Home = () => {
   const { modalOpen, setModalOpen } = useModal();
   const { todos } = useTodos();
   const { theme, setTheme } = useTheme();
   const [rotation, setRotation] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [colorId, setColorId] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [colorId, setColorId] = useState("");
 
   const initialForm = {
-    todoId: '',
-    todoTitle: '',
-    todoDesc: '',
-    todoAlloted: '',
-    todoTags: '',
-    todoCreatedAt: '',
+    todoId: "",
+    todoTitle: "",
+    todoDesc: "",
+    todoAlloted: "",
+    todoTags: "",
+    todoCreatedAt: "",
   };
 
   const toggleModal = (e) => {
@@ -48,43 +48,43 @@ const Home = () => {
   }, [modalOpen]);
 
   useEffect(() => {
-    setColorId(theme === 'dark' ? '' : 'black-color');
+    setColorId(theme === "dark" ? "" : "black-color");
   }, [theme]);
 
   return (
     <div id={colorId}>
-      <nav className='navbar flex-center' id={colorId}>
-        <div className='navbar-left flex-center'>
+      <nav className="navbar flex-center" id={colorId}>
+        <div className="navbar-left flex-center">
           <h1>
-             <span className='todoro'>ADV-TODO</span>
+            <span className="todoro">To-Do</span>
           </h1>
           <input
-            type='search'
-            placeholder='Search by tags...'
+            type="search"
+            placeholder="Search by tags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        {theme === 'dark' ? (
+        {theme === "dark" ? (
           <FaRegSun
-            className='theme-btn'
+            className="theme-btn"
             onClick={(e) => {
-              storeInLocalStorage('light');
-              setTheme('light');
+              storeInLocalStorage("light");
+              setTheme("light");
             }}
           />
         ) : (
           <BsMoonStarsFill
-            className='theme-btn'
+            className="theme-btn"
             onClick={(e) => {
-              storeInLocalStorage('dark');
-              setTheme('dark');
+              storeInLocalStorage("dark");
+              setTheme("dark");
             }}
           />
         )}
       </nav>
-      <div className='container flex flex-col align-center justify-start'>
-        <div className='todos-container flex flex-col align-center justify-center'>
+      <div className="container flex flex-col align-center justify-start">
+        <div className="todos-container flex flex-col align-center justify-center">
           {todos.todos.length !== 0 ? (
             todos.todos.map(
               (todo) =>
@@ -97,13 +97,13 @@ const Home = () => {
         </div>
         {modalOpen.status && <Modal data={modalOpen.data} />}
         <button
-          className='btn add-todo flex-center'
+          className="btn add-todo flex-center"
           style={{
             transform: `rotate(${rotation}deg)`,
           }}
           onClick={toggleModal}
         >
-          {' '}
+          {" "}
           +
         </button>
       </div>
